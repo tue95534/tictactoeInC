@@ -53,35 +53,44 @@ int main()
 {
     char board[10] = {'_','_','_','_','_','_','_','_','_','\0'};
     char *ptr = &board;
-    
     printBoard(ptr);
     do {
         int location;
         printf("Play: ");
-        scanf("%i", &location);
-        if (board[location] == '_') {
-            board[location] = 'X';
-            if (winLose(ptr, 'X') == 0) {
-                printf("\nYou Won!");
-                break;
+        
+        if (scanf("%i", &location) == 1) {
+            if (board[location] == '_') {
+                board[location] = 'X';
+                if (winLose(ptr, 'X') == 0) {
+                    printBoard(ptr);
+                    printf("\nYou Won!");
+                    break;
+                }
+                if (tieBoard(ptr) == 0) {
+                    printBoard(ptr);
+                    printf("\nYou Tied!");
+                    break;
+                }
+                computerTurn(ptr);
+                printBoard(ptr);
+                if (winLose(ptr, 'O') == 0) {
+                    printBoard(ptr);
+                    printf("\nYou Lost!");
+                    break;
+                }
+                if (tieBoard(ptr) == 0) {
+                    printBoard(ptr);
+                    printf("\nYou Tied!");
+                    break;
+                }
             }
-            if (tieBoard(ptr) == 0) {
-                printf("\nYou Tied!");
-                break;
-            }
-            computerTurn(ptr);
-            printBoard(ptr);
-            if (winLose(ptr, 'O') == 0) {
-                printf("\nYou Lost!");
-                break;
-            }
-            if (tieBoard(ptr) == 0) {
-                printf("\nYou Tied!");
-                break;
+            else {
+                printf("Invalid Location. Try Again \n");
             }
         }
         else {
-            printf("Invalid Location. Try Again \n");
+            printf("Invalid Location. Please type a number between 0-8. \n");
+            while(getchar() != '\n');
         }
     }
     while(5 == 5);
